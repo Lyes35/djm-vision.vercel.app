@@ -1,58 +1,20 @@
-# 📺 DJM PRO VISION - Smart IPTV & AI Platform
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-تطبيق **DJM PRO VISION** هو منصة بث مباشر (IPTV) متطورة تعتمد على تقنيات الذكاء الاصطناعي لتقديم تجربة مشاهدة سينمائية واحترافية. يجمع التطبيق بين قوة البث المباشر وتحليل البيانات الفوري عبر **Google Gemini AI**.
+# Run and deploy your AI Studio app
 
-🚀 **رابط المعاينة المباشر:** [djm-vision.vercel.app](https://djm-vision.vercel.app)
+This contains everything you need to run your app locally.
 
----
+View your app in AI Studio: https://ai.studio/apps/drive/1oxlBpO20khhBbKGsJTSp4etGIZu0jo7n
 
-## ✨ المميزات الرئيسية
+## Run Locally
 
-*   **🤖 تحليل ذكي (AI Insight):** يقوم التطبيق بتحليل محتوى القناة المشغلة حالياً وتقديم معلومات فورية عنها باستخدام ذكاء **Gemini**.
-*   **📦 قاعدة بيانات ضخمة مدمجة:** يحتوي التطبيق على قائمة داخلية تضم أكثر من 500 قناة (رياضية، أفلام، إسلامية، وإقليمية) تعمل تلقائياً.
-*   **☁️ سحابة المزامنة:** يدعم جلب قوائم التشغيل (M3U) من روابط خارجية وحفظها في التخزين المحلي للمتصفح.
-*   **📱 تجربة الـ APK (دعم PWA):** يمكنك تثبيت التطبيق على هاتفك الأندرويد أو الآيفون ليظهر كأيقونة تطبيق مستقلة تماماً.
-*   **🔒 حماية وتشفير:** نظام متطور لتشفير الروابط وحمايتها من التتبع لضمان استقرار البث.
-*   **⚡ أداء فائق:** استخدام مكتبة `mpegts.js` لضمان تشغيل القنوات بجودة عالية وأقل استهلاك للإنترنت.
+**Prerequisites:**  Node.js
 
----
 
-## 📱 كيف تحول الموقع إلى تطبيق على هاتفك؟
-
-لا تحتاج لتحميل ملف APK خارجي، التطبيق يدعم تقنية **PWA**:
-
-1.  افتح الرابط [djm-vision.vercel.app](https://djm-vision.vercel.app) من متصفح Chrome (للأندرويد) أو Safari (للآيفون).
-2.  اضغط على **أيقونة الخيارات (⋮)** أو زر **المشاركة**.
-3.  اختر **"إضافة إلى الشاشة الرئيسية" (Add to Home Screen)**.
-4.  سيظهر التطبيق كأيقونة على شاشتك الرئيسية ويعمل كتطبيق APK حقيقي.
-
----
-
-## 🛠 التقنيات المستخدمة
-
-*   **Framework:** React 19 + TypeScript.
-*   **Styling:** Tailwind CSS (Cyberpunk Theme).
-*   **AI SDK:** @google/genai (Gemini 3.5 Flash).
-*   **Streaming Engine:** mpegts.js & HTML5.
-*   **Icons:** Lucide React.
-
----
-
-## ⚙️ الإعدادات والمزامنة
-
-يمكنك تخصيص مصادر القنوات الخاصة بك:
-1.  اضغط على أيقونة **"الإعدادات"** في شريط التنقل العلوي.
-2.  قم بلصق رابط ملف **M3U** الخاص بك في حقل "رابط المصدر المباشر".
-3.  اضغط على **"مزامنة الآن"** ليقوم التطبيق بتحميل قنواتك الخاصة فوراً.
-
----
-
-## ⚠️ إخلاء مسؤولية (Disclaimer)
-
-هذا التطبيق هو **مشغل وسائط (Media Player)** فقط. المطور وفريق **DJM PRO** لا يستضيفون أي محتوى مرئي. يتم توفير القنوات المدمجة للأغراض التجريبية والتعليمية فقط. المسؤولية القانونية عن المحتوى تقع على عاتق مزودي روابط البث الخارجيين.
-
----
-
-## 👨‍💻 المطور
-**Lyes35** - *Visionary Developer*  
-حقوق البرمجيات محفوظة © 2025 - فريق **DJM PRO VISION**.
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

@@ -1,0 +1,8 @@
+{
+  "name": "DJM PRO VISION",
+  "description": "منصة بث احترافية مدعومة بالذكاء الاصطناعي مع تشفير متطور.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
