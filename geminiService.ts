@@ -3,18 +3,25 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getChannelInsight = async (channelName: string) => {
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Provide a very brief 1-sentence summary of what this TV channel is about: "${channelName}". Return as plain text in Arabic.`,
+    const response = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ channelName }),
     });
-    return response.text;
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.analysis;
   } catch (error) {
+    console.error('Error fetching channel insight:', error);
     return "معلومات القناة غير متوفرة حالياً.";
   }
 };
