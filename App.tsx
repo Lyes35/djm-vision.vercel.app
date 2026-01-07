@@ -3,13 +3,12 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, useEffect, useRef } from 'react';
 import { Channel } from './types';
-import { SecurityManager } from './services/security';
-import { getChannelInsight } from './services/geminiService';
-import { INTERNAL_PLAYLIST } from './constants/playlist';
-import IntroScreen from './components/IntroScreen';
-import Loading from './components/Loading';
+import { SecurityManager } from './security';
+import { getChannelInsight } from './geminiService';
+import { INTERNAL_PLAYLIST } from './playlist';
+import IntroScreen from './IntroScreen';
+import Loading from './Loading';
 import { 
   Search, Tv, ShieldCheck, Play, RefreshCw, Cloud, AlertTriangle, 
   Settings, CheckCircle2, Link as LinkIcon, X, Github, Layers, Zap, Activity, Info

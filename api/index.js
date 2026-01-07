@@ -1,9 +1,10 @@
 // المسار: /api/index.js
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch'); // Removed, using native fetch
 
 module.exports = async (req, res) => {
   // استخراج الرابط من العنوان ?url=...
   const { url } = req.query;
+
   // التحقق من وجود رابط
   if (!url) {
     return res.status(400).json({ error: 'Please provide a URL parameter (?url=https://...)' });
@@ -34,4 +35,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch the stream', details: error.message });
   }
 };
-ج
