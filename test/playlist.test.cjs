@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { parseM3UContent } = require('../api/playlist.js');
+const { parseM3UContent } = require('../api/playlist.cjs');
 
 // Sample M3U: one with group and logo, one without group (should default)
 const sample = `#EXTM3U

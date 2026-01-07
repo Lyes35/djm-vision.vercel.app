@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test-stream": "node test-stream.js",
-    "check-gemini": "node scripts/check-gemini.cjs"
+    "check-gemini": "node scripts/check-gemini.cjs",
+    "test": "node test/playlist.test.cjs"
   },
   "dependencies": {
     "@google/genai": "^1.34.0",
