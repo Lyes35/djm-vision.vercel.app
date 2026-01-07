@@ -1,5 +1,5 @@
 // api/analyze.js
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { GoogleGenerativeAI } = require("@google/genai");
 
 module.exports = async (req, res) => {
   // Vérifier la méthode HTTP
@@ -18,18 +18,19 @@ module.exports = async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return res.status(500).json({ error: 'API Key missing' });
+      console.error('Missing GEMINI_API_KEY - set it in Vercel Environment Variables or .env.local for local dev');
+      return res.status(500).json({ error: 'GEMINI_API_KEY missing. Set GEMINI_API_KEY in environment or .env.local' });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
     const result = await model.generateContent({
-      contents: `Provide a very brief 1-sentence summary of what this TV channel is about: "${channelName}". Return as plain text in Arabic.`,
+      contents: `أعطِ جملة واحدة قصيرة باللغة العربية تصف محتوى قناة التلفزيون هذه: "${channelName}". أعد النص باللغة العربية فقط.`,
     });
 
     const response = result.response;
-    const analysis = response.text();
+    const analysis = await response.text();
 
     // Headers CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
