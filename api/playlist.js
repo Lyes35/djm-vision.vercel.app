@@ -1,6 +1,6 @@
 // api/playlist.js
 const fetch = require('node-fetch');
-const logger = require('../logger');
+const logger = require('../logger.cjs');
 
 module.exports = async (req, res) => {
   const { url, category, limit } = req.query;

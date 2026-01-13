@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const logger = require('./logger');
+const logger = require('./logger.cjs');
 
 async function testStream(url) {
   logger.info(`Testing stream: ${url}`);

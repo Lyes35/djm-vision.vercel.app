@@ -1,6 +1,6 @@
 // المسار: /api/index.js
 const fetch = require('node-fetch');
-const logger = require('./logger');
+const logger = require('./logger.cjs');
 
 module.exports = async (req, res) => {
   // استخراج الرابط من العنوان ?url=...

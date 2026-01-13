@@ -3,7 +3,7 @@ import express from 'express';
 import apiHandler from './api/index.js';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const logger = require('./logger');
+const logger = require('./logger.cjs');
 
 const app = express();
 app.use(express.json());

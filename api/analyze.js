@@ -1,6 +1,6 @@
 // api/analyze.js
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const logger = require('../logger');
+const logger = require('../logger.cjs');
 
 module.exports = async (req, res) => {
   // Vérifier la méthode HTTP

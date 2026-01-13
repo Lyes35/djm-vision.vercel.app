@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const logger = require('./logger');
+const logger = require('./logger.cjs');
 
 const app = express();
 const port = process.env.PROXY_PORT || 3001;
