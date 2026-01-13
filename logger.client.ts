@@ -1,5 +1,5 @@
 const LEVELS: Record<string, number> = { debug: 0, info: 1, warn: 2, error: 3 };
-const configured = (import.meta.env.VITE_LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'debug')).toLowerCase();
+const configured = (((process.env as any).VITE_LOG_LEVEL) || (process.env.NODE_ENV === 'production' ? 'info' : 'debug')).toLowerCase();
 const configuredLevel = LEVELS[configured] ?? 0;
 function enabled(level: string) {
   return LEVELS[level] >= configuredLevel;

@@ -39,6 +39,17 @@ const App: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<any>(null);
 
+  // ⚠️ Avertissement pour les développeurs : vérifier la clé GEMINI au démarrage (utile en dev local)
+  useEffect(() => {
+    // process.env is not available in the browser; Vite injects env vars at build time.
+    // On runtime we can at least check a client-side exposed env variable if configured.
+    // We check both client-injected and fallback possibilities to be robust in dev.
+    const key = (process as any)?.env?.GEMINI_API_KEY ?? (window as any)?.__GEMINI_API_KEY;
+    if (!key) {
+      console.warn("⚠️ La variable d'environnement GEMINI_API_KEY n'est pas définie. Créez un fichier .env.local contenant GEMINI_API_KEY=... ou exportez la variable pour que /api/analyze fonctionne en local.");
+    }
+  }, []);
+
   // تحميل القنوات المدمجة فوراً عند بدء التطبيق
   useEffect(() => {
     if (!showIntro) {
