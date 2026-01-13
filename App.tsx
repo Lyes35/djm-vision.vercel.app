@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 import React, { useState, useEffect, useRef } from 'react';
+import logger from './logger.client';
 
 declare var mpegts: any;
 
@@ -70,7 +71,7 @@ const App: React.FC = () => {
             setSyncStatus('done');
         }
     } catch (error) {
-        console.warn("Cloud sync failed, using internal database.");
+        logger.warn("Cloud sync failed, using internal database.");
         setSyncStatus('error');
         // إذا فشل كل شيء، نتأكد أن القائمة المدمجة معروضة
         if (channels.length === 0) parseM3U(INTERNAL_PLAYLIST);
@@ -150,7 +151,7 @@ const App: React.FC = () => {
             playerRef.current.play();
         });
       } catch (e) { 
-          console.error("Stream Error", e);
+          logger.error("Stream Error", e);
       }
     }
 
