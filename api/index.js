@@ -1,5 +1,6 @@
 // المسار: /api/index.js
 // const fetch = require('node-fetch'); // Removed, using native fetch
+const logger = require('../logger');
 
 module.exports = async (req, res) => {
   // استخراج الرابط من العنوان ?url=...
@@ -31,7 +32,7 @@ module.exports = async (req, res) => {
     res.status(200).send(data);
 
   } catch (error) {
-    console.error(error);
+    logger.error('Proxy fetch error:', error);
     res.status(500).json({ error: 'Failed to fetch the stream', details: error.message });
   }
 };

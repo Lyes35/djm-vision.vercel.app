@@ -1,11 +1,14 @@
 import express from 'express';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const logger = require('./logger');
 
 const app = express();
 const port = process.env.PROXY_PORT || 3001;
 
 // Simple logger for debug
 app.use((req, _res, next) => {
-  console.log(`[proxy] ${req.method} ${req.url}`);
+  logger.debug(`[proxy] ${req.method} ${req.url}`);
   next();
 });
 
@@ -59,9 +62,9 @@ app.get('/api', async (req, res) => {
 
     res.status(200).send(text);
   } catch (error) {
-    console.error('Proxy fetch error:', error);
+    logger.error('Proxy fetch error:', error);
     res.status(502).json({ error: 'Failed to fetch the stream', details: String(error.message || error) });
   }
 });
 
-app.listen(port, () => console.log(`Dev proxy listening on http://localhost:${port}`));
+app.listen(port, () => logger.info(`Dev proxy listening on http://localhost:${port}`));
