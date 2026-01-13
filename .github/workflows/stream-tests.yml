@@ -23,8 +23,8 @@ jobs:
       - name: Start dev proxy
         run: |
           npm run proxy &
-          # wait for proxy to be ready
-          sleep 1
+          # wait for proxy to be ready (increased to reduce flakiness)
+          sleep 3
 
       - name: Run stream tests
         run: npm run test:streams

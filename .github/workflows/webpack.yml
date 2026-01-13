@@ -32,8 +32,8 @@ jobs:
       run: |
         npm run proxy &
         echo $! > proxy.pid
-        # wait for proxy to be ready
-        sleep 1
+        # wait for proxy to be ready (increased to reduce flakiness)
+        sleep 3
 
     - name: Run stream tests
       env:
