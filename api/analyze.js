@@ -18,7 +18,8 @@ module.exports = async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      return res.status(500).json({ error: 'API Key missing' });
+      console.warn("⚠️ La variable d'environnement GEMINI_API_KEY n'est pas définie. Définissez-la dans .env.local ou via vos variables d'environnement pour activer /api/analyze.");
+      return res.status(500).json({ error: 'API Key missing. Please set GEMINI_API_KEY in .env.local or the environment.' });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
