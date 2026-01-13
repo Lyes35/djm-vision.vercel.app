@@ -1,5 +1,6 @@
 // api/analyze.js
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const logger = require('../logger');
 
 module.exports = async (req, res) => {
   // Vérifier la méthode HTTP
@@ -18,8 +19,8 @@ module.exports = async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      console.warn("⚠️ La variable d'environnement GEMINI_API_KEY n'est pas définie. Définissez-la dans .env.local ou via vos variables d'environnement pour activer /api/analyze.");
-      return res.status(500).json({ error: 'API Key missing. Please set GEMINI_API_KEY in .env.local or the environment.' });
+      logger.warn("⚠️ La variable d'environnement GEMINI_API_KEY n'est pas définie. Définissez-la dans .env.local ou via vos variables d'environnement pour activer /api/analyze.");
+      return res.status(501).json({ error: 'API Key missing. Please set GEMINI_API_KEY in .env.local or the environment.' });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
@@ -40,7 +41,7 @@ module.exports = async (req, res) => {
     return res.status(200).json({ analysis });
 
   } catch (error) {
-    console.error('AI Analysis error:', error);
+    logger.error('AI Analysis error:', error);
     return res.status(500).json({ error: 'Failed to analyze channel' });
   }
 };
