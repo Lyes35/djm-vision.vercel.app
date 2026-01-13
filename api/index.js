@@ -1,7 +1,7 @@
 // المسار: /api/index.js
-// Using ESM export for compatibility with the dev environment
+// const fetch = require('node-fetch'); // Removed, using native fetch
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // استخراج الرابط من العنوان ?url=...
   const { url } = req.query;
 
