@@ -1,5 +1,6 @@
 // api/playlist.js
 const fetch = require('node-fetch');
+const logger = require('../logger.cjs');
 
 module.exports = async (req, res) => {
   const { url, category, limit } = req.query;
@@ -86,7 +87,7 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Playlist processing error:', error);
+    logger.error('Playlist processing error:', error);
     res.status(500).json({ error: 'Failed to process playlist', details: error.message });
   }
 };

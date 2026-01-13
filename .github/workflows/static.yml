@@ -1,5 +1,6 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# (deprecated) old pages workflow — replaced by pages-deploy.yml
+# Kept for historical reasons — DO NOT USE
+name: deprecated-static-workflow
 
 on:
   # Runs on pushes targeting the default branch
@@ -41,7 +42,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
+
             - name: Cache
   uses: actions/cache@v5.0.1
   with:

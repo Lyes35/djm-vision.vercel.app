@@ -1,0 +1,8 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:8
+#EXTINF:4.000,
+https://storage.googleapis.com/shaka-demo-assets/angel-one/video_576p_768k_vp9.webm
+#EXTINF:4.000,
+https://storage.googleapis.com/shaka-demo-assets/angel-one/video_576p_768k_vp9.webm
+#EXT-X-ENDLIST

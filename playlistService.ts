@@ -2,6 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
+import logger from './logger.client';
 
 export const fetchFilteredPlaylist = async (url: string, category?: string, limit?: number) => {
   try {
@@ -19,7 +20,7 @@ export const fetchFilteredPlaylist = async (url: string, category?: string, limi
     const data = await response.json();
     return data.channels || [];
   } catch (error) {
-    console.error('Error fetching filtered playlist:', error);
+    logger.error('Error fetching filtered playlist:', error);
     return [];
   }
 };
@@ -38,7 +39,7 @@ export const getPlaylistStats = async (url: string) => {
       filtered: data.filtered || 0
     };
   } catch (error) {
-    console.error('Error fetching playlist stats:', error);
+    logger.error('Error fetching playlist stats:', error);
     return { total: 0, filtered: 0 };
   }
 };

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
-import { GeneratedImage } from '../types';
+import { GeneratedImage } from './types';
 import { Download, Sparkles, Edit3, Maximize2, X, ZoomIn, ZoomOut, RefreshCcw } from 'lucide-react';
 
 interface InfographicProps {

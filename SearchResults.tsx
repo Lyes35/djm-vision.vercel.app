@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { SearchResultItem } from '../types';
+import { SearchResultItem } from './types';
 import { ExternalLink, BookOpen, Link as LinkIcon } from 'lucide-react';
 
 interface SearchResultsProps {
