@@ -22,7 +22,28 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Install dependencies
+      run: npm ci
+
     - name: Build
+      run: npx webpack
+
+    - name: Start dev proxy
       run: |
-        npm install
-        npx webpack
+        npm run proxy &
+        echo $! > proxy.pid
+        # wait for proxy to be ready
+        sleep 1
+
+    - name: Run stream tests
+      env:
+        PROXY_PORT: 3001
+      run: npm run test:streams
+
+    - name: Stop dev proxy
+      run: |
+        if [ -f proxy.pid ]; then
+          PID=$(cat proxy.pid)
+          kill $PID || true
+          rm -f proxy.pid
+        fi
