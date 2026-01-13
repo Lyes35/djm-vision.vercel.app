@@ -1,0 +1,10 @@
+{
+  "name": "djm-vision",
+  "compatibility_date": "2026-01-13",
+  "assets": {
+    "directory": "./dist"
+  },
+  "build": {
+    "command": "npm run build"
+  }
+}

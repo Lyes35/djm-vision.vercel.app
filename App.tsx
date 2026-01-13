@@ -14,6 +14,8 @@ import {
   Settings, CheckCircle2, Link as LinkIcon, X, Github, Layers, Zap, Activity, Info
 } from 'lucide-react';
 
+import React, { useState, useEffect, useRef } from 'react';
+
 declare var mpegts: any;
 
 const App: React.FC = () => {

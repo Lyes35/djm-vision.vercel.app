@@ -1,12 +1,14 @@
-// test-stream.js - Script de test pour vérifier les streams IPTV
-const fetch = require('node-fetch');
+// test-stream.js - Script de test pour vérifier les streams IPTV (ESM)
+import fetch from 'node-fetch';
+import { fileURLToPath } from 'url';
 
 async function testStream(url) {
   console.log(`Testing stream: ${url}`);
 
   try {
-    // Test du proxy local
-    const proxyUrl = `http://localhost:3000/api/?url=${encodeURIComponent(url)}`;
+    // Test du proxy local (configurable via PROXY_URL, défaut: http://localhost:3001/api/)
+    const proxyBase = process.env.PROXY_URL || 'http://localhost:3001/api/?url=';
+    const proxyUrl = `${proxyBase}${encodeURIComponent(url)}`;
     console.log(`Proxy URL: ${proxyUrl}`);
 
     const response = await fetch(proxyUrl);
@@ -68,10 +70,8 @@ async function runTests() {
   console.log('4. Testez également sur l\'environnement de production Vercel');
 }
 
-// Exporter pour utilisation en module
-module.exports = { testStream };
-
-// Exécuter si appelé directement
-if (require.main === module) {
+// Exécuter si appelé directement (pattern ESM)
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] === __filename) {
   runTests();
 }
