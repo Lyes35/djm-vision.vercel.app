@@ -1,0 +1,32 @@
+name: Stream playlist tests
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  stream-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start dev proxy
+        run: |
+          npm run proxy &
+          # wait for proxy to be ready
+          sleep 1
+
+      - name: Run stream tests
+        run: npm run test:streams
+        env:
+          PROXY_PORT: 3001

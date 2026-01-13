@@ -6,9 +6,9 @@ async function testStream(url) {
   console.log(`Testing stream: ${url}`);
 
   try {
-    // Test du proxy local (configurable via PROXY_URL, défaut: http://localhost:3001/api/)
-    const proxyBase = process.env.PROXY_URL || 'http://localhost:3001/api/?url=';
-    const proxyUrl = `${proxyBase}${encodeURIComponent(url)}`;
+    // Test du proxy local (configurable via PROXY_PORT, default 3001)
+    const proxyPort = process.env.PROXY_PORT || 3001;
+    const proxyUrl = `http://localhost:${proxyPort}/api/?url=${encodeURIComponent(url)}`;
     console.log(`Proxy URL: ${proxyUrl}`);
 
     const response = await fetch(proxyUrl);
@@ -31,8 +31,22 @@ async function testStream(url) {
       const lines = content.split('\n').filter(line => line.trim());
       console.log(`Lines: ${lines.length}`);
 
-      // Compter les streams
-      const streamCount = lines.filter(line => line.startsWith('http')).length;
+      // Compter les streams — considérer aussi les URI relatives en les résolvant
+      const base = url.substring(0, url.lastIndexOf('/') + 1);
+      let streamCount = 0;
+      for (const line of lines) {
+        if (line.startsWith('http')) {
+          streamCount++;
+        } else if (!line.startsWith('#')) {
+          // URI relative, on la résout et on la compte
+          try {
+            const resolved = new URL(line, base).href;
+            if (resolved.startsWith('http')) streamCount++;
+          } catch {
+            // ignore
+          }
+        }
+      }
       console.log(`Streams found: ${streamCount}`);
 
       return true;
@@ -51,23 +65,32 @@ async function testStream(url) {
 async function runTests() {
   console.log('🚀 Starting IPTV Stream Tests\n');
 
-  // Test avec un stream public connu
+  // Test avec un stream HLS public de référence
   const testUrls = [
-    'https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8',
+    'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+    'https://raw.githubusercontent.com/zinzineddine15-arch/djm-vision.vercel.app/feat/gemini-env-warning/tests/absolute-segments.m3u8',
     // Vous pouvez ajouter vos propres URLs de test ici
   ];
 
+  const results = [];
+
   for (const url of testUrls) {
     console.log(`\n--- Testing: ${url} ---`);
-    await testStream(url);
+    const ok = await testStream(url);
+    results.push({ url, ok });
     console.log('');
   }
 
-  console.log('📋 Instructions:');
-  console.log('1. Démarrez le serveur local: npm run dev');
-  console.log('2. Exécutez ce script: node test-stream.js');
-  console.log('3. Vérifiez que les streams se chargent correctement');
-  console.log('4. Testez également sur l\'environnement de production Vercel');
+  const failed = results.filter(r => !r.ok);
+  if (failed.length > 0) {
+    console.error(`❌ ${failed.length} stream test(s) failed:`);
+    failed.forEach(f => console.error(` - ${f.url}`));
+    // Exit with non-zero code so CI fails
+    process.exit(1);
+  }
+
+  console.log('✅ All stream tests passed successfully');
+  process.exit(0);
 }
 
 // Exécuter si appelé directement (pattern ESM)

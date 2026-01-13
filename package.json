@@ -8,17 +8,19 @@
     "build": "vite build",
     "preview": "vite preview",
     "test-stream": "node test-stream.js",
-    "proxy": "node server-dev.js",
+    "test:streams": "node test-stream.js",
+    "proxy": "node dev-proxy.js",
     "deploy": "npm run build && npx wrangler deploy --assets=./dist"
   },
   "dependencies": {
-    "@google/genai": "^1.34.0",
-    "express": "^4.22.1",
-    "lucide-react": "^0.562.0",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "@google/genai": "^1.34.0",
+    "lucide-react": "^0.562.0",
+    "express": "^4.18.2"
   },
   "devDependencies": {
+    "node-fetch": "^3.3.2",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",
