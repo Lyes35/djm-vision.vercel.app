@@ -1,35 +1,38 @@
 // test-stream.js - Script de test pour vérifier les streams IPTV (ESM)
 import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const logger = require('./logger');
 
 async function testStream(url) {
-  console.log(`Testing stream: ${url}`);
+  logger.info(`Testing stream: ${url}`);
 
   try {
     // Test du proxy local (configurable via PROXY_PORT, default 3001)
     const proxyPort = process.env.PROXY_PORT || 3001;
     const proxyUrl = `http://localhost:${proxyPort}/api/?url=${encodeURIComponent(url)}`;
-    console.log(`Proxy URL: ${proxyUrl}`);
+    logger.debug(`Proxy URL: ${proxyUrl}`);
 
     const response = await fetch(proxyUrl);
 
     if (!response.ok) {
-      console.error(`❌ Proxy failed: ${response.status} ${response.statusText}`);
+      logger.error(`❌ Proxy failed: ${response.status} ${response.statusText}`);
       return false;
     }
 
     const content = await response.text();
     const contentType = response.headers.get('content-type');
 
-    console.log(`✅ Proxy successful`);
-    console.log(`Content-Type: ${contentType}`);
-    console.log(`Content length: ${content.length} characters`);
+    logger.info(`✅ Proxy successful`);
+    logger.debug(`Content-Type: ${contentType}`);
+    logger.debug(`Content length: ${content.length} characters`);
 
     // Vérifier si c'est du HLS valide
     if (content.includes('#EXTM3U')) {
-      console.log(`✅ Valid M3U playlist detected`);
+      logger.info(`✅ Valid M3U playlist detected`);
       const lines = content.split('\n').filter(line => line.trim());
-      console.log(`Lines: ${lines.length}`);
+      logger.debug(`Lines: ${lines.length}`);
 
       // Compter les streams — considérer aussi les URI relatives en les résolvant
       const base = url.substring(0, url.lastIndexOf('/') + 1);
@@ -47,23 +50,23 @@ async function testStream(url) {
           }
         }
       }
-      console.log(`Streams found: ${streamCount}`);
+      logger.info(`Streams found: ${streamCount}`);
 
       return true;
     } else {
-      console.log(`⚠️  Content doesn't look like M3U`);
-      console.log(`First 200 chars: ${content.substring(0, 200)}...`);
+      logger.warn(`⚠️  Content doesn't look like M3U`);
+      logger.debug(`First 200 chars: ${content.substring(0, 200)}...`);
       return false;
     }
 
   } catch (error) {
-    console.error(`❌ Test failed: ${error.message}`);
+    logger.error(`❌ Test failed: ${error.message}`);
     return false;
   }
 }
 
 async function runTests() {
-  console.log('🚀 Starting IPTV Stream Tests\n');
+  logger.info('🚀 Starting IPTV Stream Tests\n');
 
   // Test avec un stream HLS public de référence
   const testUrls = [
@@ -75,21 +78,21 @@ async function runTests() {
   const results = [];
 
   for (const url of testUrls) {
-    console.log(`\n--- Testing: ${url} ---`);
+    logger.info(`\n--- Testing: ${url} ---`);
     const ok = await testStream(url);
     results.push({ url, ok });
-    console.log('');
+    logger.debug('');
   }
 
   const failed = results.filter(r => !r.ok);
   if (failed.length > 0) {
-    console.error(`❌ ${failed.length} stream test(s) failed:`);
-    failed.forEach(f => console.error(` - ${f.url}`));
+    logger.error(`❌ ${failed.length} stream test(s) failed:`);
+    failed.forEach(f => logger.error(` - ${f.url}`));
     // Exit with non-zero code so CI fails
     process.exit(1);
   }
 
-  console.log('✅ All stream tests passed successfully');
+  logger.info('✅ All stream tests passed successfully');
   process.exit(0);
 }
 
